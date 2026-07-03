@@ -12,9 +12,10 @@
 let seq = 0;
 const nextId = (prefix) => `${prefix}_${(++seq).toString(36).padStart(3, "0")}`;
 
-/** 终态：不再阻塞任何下游判断的状态。
- *  示例版从严：只有 completed 的依赖才放行下游（失败节点阻塞下游，
- *  逼协调者显式重试或取消）。Reina 的生产语义更宽（见 README 对照）。 */
+/** 终态：已经收口、不再变化的状态（完备性闸门放行的依据）。
+ *  注意终态 ≠ 放行下游：能解锁下游的只有 completed——cancelled 的依赖
+ *  照样堵住下游，逼协调者显式取消或重排下游，而不是当它没发生过。
+ *  示例版从严：失败节点同样阻塞下游。Reina 的生产语义更宽（见 README 对照）。 */
 const SETTLED = new Set(["completed", "cancelled"]);
 
 export class TaskDag {
@@ -60,7 +61,8 @@ export class TaskDag {
     }
     node.blockedBy.push(depId);
     dep.blocks.push(id);
-    if (node.status === "pending" && !SETTLED.has(dep.status)) node.status = "blocked";
+    // 与 add()/ready() 同一把尺：只有 completed 的依赖不挡路
+    if (node.status === "pending" && dep.status !== "completed") node.status = "blocked";
   }
 
   /** ready 集合：待办、且每条依赖都已 completed 的节点。
@@ -99,6 +101,11 @@ export class TaskDag {
     const node = this.#must(id);
     if (node.workerIds.at(-1) !== workerId) {
       return { ok: false, message: `忽略过期回写：${workerId} 不是 ${id} 的现任 worker` };
+    }
+    // 现任校验挡得住"被重派顶替"的迟到结果，挡不住"被 cancel 之后"的——
+    // 取消不换 worker，现任的迟到回写会把 cancelled 复活成 completed。终态不接受改写。
+    if (SETTLED.has(node.status)) {
+      return { ok: false, message: `忽略过期回写：${id} 已收口（${node.status}），迟到的结果不再改写` };
     }
     node.status = ok ? "completed" : "failed";
     node.resultSummary = summary;

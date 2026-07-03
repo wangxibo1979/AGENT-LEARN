@@ -30,7 +30,7 @@ node s06_compaction/demo.mjs
 
 第一反应往往是"我本地算一下 messages 有多少 token"。别。你手上没有服务商的 tokenizer——本地估算（哪怕用 tiktoken）对 DeepSeek / Claude / GLM 都是近似值，中文文本误差轻松超过 15%。估少了，你会在真窗口边界撞出 `context too long`，此时已经来不及优雅压缩。
 
-正确做法零成本：**每次 API 响应都带 `usage`**，那是服务商亲口报的数。`total_tokens = prompt + completion`，约等于下一轮请求要背的全部历史。拿它对照模型窗口，超过阈值（本章默认 75%）就压：
+正确做法零成本：**每次 API 响应都带 `usage`**，那是服务商亲口报的数。（流式调用要在请求里加 `stream_options: {"include_usage": true}`，usage 才会跟在流的最后一片——不加的话你永远拿不到报数，压缩也就永远不会触发。）`total_tokens = prompt + completion`，约等于下一轮请求要背的全部历史。拿它对照模型窗口，超过阈值（本章默认 75%）就压：
 
 ```js
 const used = usage.total_tokens ?? (usage.prompt_tokens ?? 0) + (usage.completion_tokens ?? 0);
@@ -57,13 +57,15 @@ if (used >= threshold) /* 触发压缩 */;
 
 ```js
 let keepFrom = messages.length - keepRecent;
-const lastUser = messages.findLastIndex((m) => m.role === "user");
+const lastUser = messages.findLastIndex(isRealUser);
 if (lastUser >= 0 && lastUser < keepFrom) {
   if (charsOf(messages.slice(lastUser)) <= maxAnchorChars) keepFrom = lastUser;
 }
 // 切口不能落在 assistant(tool_calls)/tool 一对中间，否则下轮请求 400
 while (keepFrom > 0 && messages[keepFrom].role === "tool") keepFrom--;
 ```
+
+注意是 `isRealUser` 而不是 `m.role === "user"`——历史里的 user 消息不全是用户说的：s03 看门狗的纠偏 prompt、上一次压缩留下的摘要，也都是以 `role:"user"` 塞进去的。锚点若停在它们身上，真正的启动指令照样被转述丢掉——所以按已知前缀（`[上下文压缩]`、`自动纠偏触发：`）把合成消息排除掉。
 
 回拉有上限：启动消息如果在几百条之前，把它之后的全保留，压缩就腾不出空间了。超限时放弃回拉——兜底交给下一条。
 
@@ -103,7 +105,7 @@ AGENT_API_KEY=sk-xxx node s06_compaction/agent.mjs
 # 可选：AGENT_CONTEXT_WINDOW=128000 AGENT_COMPACT_PERCENT=75
 ```
 
-窗口没有任何 API 能查，只能自己配（Reina 也是配在 models.json 里）。想亲眼看到压缩，把 `AGENT_COMPACT_PERCENT` 调到 5，然后让它连续读几个大文件。免 key 演示的切片决策输出节选（真实运行）：
+窗口在标准 chat/completions 协议里没有字段能查（个别服务商的模型列表接口会给 `context_length`，但不能指望），所以只能自己配（Reina 也是配在 models.json 里）。想亲眼看到压缩，把 `AGENT_COMPACT_PERCENT` 调到 5，然后让它连续读几个大文件。免 key 演示的切片决策输出节选（真实运行）：
 
 ```
 ━━━ 场景二：切片决策（保什么 / 压什么 / 启动消息逐字保留） ━━━

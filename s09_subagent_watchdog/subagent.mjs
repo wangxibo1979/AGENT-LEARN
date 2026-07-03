@@ -42,6 +42,18 @@ export async function runChildWithWatchdog(child, limits, hooks = {}) {
     lastEventAt = Date.now();
   });
 
+  // 击杀只发生一次：interrupt 之后 run() 可能还要一会儿才返回，期间心跳
+  // 每次醒来都会再判一次超限——不加闩，onKill 会重复触发、两个定时器还会
+  // 互相改写对方定好的死因（disposition）。
+  let killed = false;
+  const kill = (reason, metric) => {
+    if (killed) return;
+    killed = true;
+    disposition = reason;
+    hooks.onKill?.(reason, metric);
+    child.interrupt();
+  };
+
   // 心跳看门狗：定期醒来量一次"多久没动静了"。
   // 注意它和 s03 行为看门狗的分工 —— 行为看门狗活在循环里，循环不转它就瞎了；
   // 心跳看门狗活在循环外面的定时器上，专抓"循环根本不转"的物理卡死。
@@ -49,11 +61,7 @@ export async function runChildWithWatchdog(child, limits, hooks = {}) {
     const idleMs = Date.now() - lastEventAt;
     // 两档预算：工具运行中（跑测试/装依赖）沉默很正常，一刀切会误杀。
     const limit = child.isInTool() ? limits.staleInToolMs : limits.staleIdleMs;
-    if (idleMs > limit) {
-      disposition = "stale";
-      hooks.onKill?.("stale", idleMs);
-      child.interrupt();
-    }
+    if (idleMs > limit) kill("stale", idleMs);
   }, limits.heartbeatMs);
 
   // 墙钟硬顶：自我重排的定时器。到点先验尸 —— 最近还有事件说明在勤奋干活，
@@ -62,15 +70,14 @@ export async function runChildWithWatchdog(child, limits, hooks = {}) {
   let timer;
   const scheduleTimeout = (delay) =>
     setTimeout(() => {
+      if (killed) return;
       if (Date.now() - lastEventAt < limits.healthyRecentMs) {
         extensions++;
         hooks.onExtend?.(limits.healthyExtendMs, extensions);
         timer = scheduleTimeout(limits.healthyExtendMs);
         return;
       }
-      disposition = "timeout";
-      hooks.onKill?.("timeout", Date.now() - started);
-      child.interrupt();
+      kill("timeout", Date.now() - started);
     }, delay);
   timer = scheduleTimeout(limits.timeoutMs);
 

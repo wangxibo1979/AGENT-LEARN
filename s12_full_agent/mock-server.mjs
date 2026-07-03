@@ -17,6 +17,7 @@
 // 或者直接 node selftest.mjs —— 它会在进程内起本服务器并全自动验收。
 
 import http from "node:http";
+import { pathToFileURL } from "node:url";
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -238,7 +239,9 @@ export function createMockServer({ delayMs = 3 } = {}) {
 }
 
 // 直接运行 = 单独起服务，方便手动把 agent 指过来玩。
-if (import.meta.url === `file://${process.argv[1]?.replace(/\\/g, "/")}`) {
+// 用 pathToFileURL 而不是手拼 "file://"：Windows 路径拼出来是 file://F:/…（两斜杠），
+// 而 import.meta.url 是 file:///F:/…（三斜杠），手拼版在 Windows 上永远不相等。
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const port = Number(process.argv[2] ?? 8390);
   const { url } = await createMockServer().start(port);
   console.log(`假模型服务器已上线：${url}`);

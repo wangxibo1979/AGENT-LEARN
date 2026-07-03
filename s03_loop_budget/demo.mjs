@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 不需要 API key 的看门狗演示：用三个"剧本 agent"喂 LoopBudget，
+// 不需要 API key 的看门狗演示：用四个"剧本 agent"喂 LoopBudget，
 // 亲眼看三种失控模式分别在第几轮被摁停、勤奋 agent 如何拿到续期。
 //
 //   node s03_loop_budget/demo.mjs

@@ -62,7 +62,7 @@ const body = text.length > CAP ? text.slice(0, CAP) + `\n…(截断，共 ${text
 return body.split("\n").map((line, i) => `${String(i + 1).padStart(4)}\t${line}`).join("\n");
 ```
 
-带行号是为了模型能精确引用位置。那个 50KB 硬截断是个**临时创可贴**——如果文件有 2MB 呢？截掉的部分模型永远看不到了，它甚至不知道自己错过了什么。s04 会正面解决这个问题（预算 + 无损溢出），现在先记住这里埋了颗雷。
+带行号是为了模型能精确引用位置。那个 5 万字符的硬截断是个**临时创可贴**——如果文件有 2MB 呢？截掉的部分模型永远看不到了，它甚至不知道自己错过了什么。s04 会正面解决这个问题（预算 + 无损溢出），现在先记住这里埋了颗雷。
 
 ### edit_file：本章最精彩的细节
 
@@ -74,7 +74,8 @@ handler: ({ path: p, old_string, new_string }) => {
     return `编辑失败：old_string 在 ${p} 中找不到。请先 read_file 确认原文。`;
   if (text.indexOf(old_string, first + 1) !== -1)
     return `编辑失败：old_string 在 ${p} 中出现多次。请带上更多上下文让它唯一。`;
-  writeFileSync(p, text.replace(old_string, new_string));
+  // 不能用 text.replace(old, new)：new_string 里的 $$ / $& 会被 JS 当替换模式展开，静默写坏文件。
+  writeFileSync(p, text.slice(0, first) + new_string + text.slice(first + old_string.length));
   return `已编辑 ${p}`;
 },
 ```

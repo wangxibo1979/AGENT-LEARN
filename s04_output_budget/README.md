@@ -120,7 +120,7 @@ node s04_output_budget/demo.mjs
 
 本章是 Reina 输出管线的简化版，生产实现分两层：
 
-- **工具层**（`packages/tools/src/utils.ts`）：每个内置工具的输出上限 50KB / 2000 行；shell 输出用**尾部**截断（exit code 和失败总结都在结尾），全文落盘到 `.reina/tool-output/` 并附 read_file 指针。
+- **工具层**（`packages/tools/src/utils.ts`）：每个内置工具的输出上限 50KB / 2000 行；shell 输出用**尾部**截断（exit code 和失败总结都在结尾），全文落盘到 `.reina/tool_outputs/` 并附 read_file 指针。
 - **引擎层**（`packages/core/src/engine.ts` 的 `enforceTurnObservationBudget`）：每个请求前跑一遍整轮观测预算——单条超 100,000 字符、或整轮总量超 200,000 字符时 largest-first 溢出（小窗口模型按窗口的 15% / 30% 缩放）；替换成头尾节选 + `.reina/tool_outputs/<callId>.txt` 指针。这层正是为了兜住"单条上限管不到的聚合"和"完全不经过截断的 MCP 工具输出"。另有一个 24,000 字符的紧急裁剪，只在请求即将撞破窗口时出手——那是**有损**的最后手段，但连它也带指针，不留死路。
 
 日志压缩在 `packages/tools/src/log-compress.ts`（从 headroomlabs/headroom 的 Rust 实现移植），比本章多一个细节：把行里的数字/十六进制地址归一化后，相邻近似重复的行折叠成 `(line) ×N`。真实 vitest 输出实测省约 65%；eslint 输出则是 safe no-op——省不到 15% 阈值，原样返回。`REINA_LOG_COMPRESS=0` 可整体关闭。

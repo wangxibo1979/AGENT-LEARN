@@ -34,7 +34,7 @@ node s08_persistence/demo.mjs
   ✓ 只丢了崩溃瞬间那一条，之前的全部历史完好。
 ```
 
-## 设计：三个关键决定
+## 设计：四个关键决定
 
 ### ① 为什么"每次全量重写 JSON"是危险的
 
@@ -58,6 +58,7 @@ node s08_persistence/demo.mjs
 
 ```js
 for (const line of text.split("\n")) {
+  if (!line.trim()) continue; // 文件末尾的换行会产生空串，先跳过
   let event;
   try { event = JSON.parse(line); } catch { skipped++; continue; } // 半截行：跳过
   switch (event.type) {

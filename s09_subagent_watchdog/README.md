@@ -37,7 +37,7 @@ node s09_subagent_watchdog/demo.mjs
   结局：disposition=completed，耗时 2415ms，延期 1 次
 ```
 
-## 设计：四个关键决定
+## 设计：五个关键决定
 
 ### ① 子代理 = 全新 messages 的迷你主循环，深度上限 1
 
@@ -62,6 +62,8 @@ if (idleMs > limit) { disposition = "stale"; child.interrupt(); }
 ```
 
 闲置（没在跑工具却没动静）450 秒判卡死；但工具运行中放宽到 1200 秒——跑一遍测试套件、装一次依赖，沉默十几分钟是**常态**，一刀切的闲置阈值会把干正事的子代理成批误杀。demo 场景三就是这个对照：工具里沉默 1200ms，远超闲置预算 400ms，但没被杀。
+
+一个必须坦白的局限：本章示例 agent 的工具全是同步的（`execSync`/`readFileSync`），工具执行期间 Node 的事件循环整个被堵住，心跳定时器根本不会醒——"工具在途"这一档在示例 agent 里实际形同虚设，只有 demo 的异步假子代理能演示它。真要让看门狗抓得住工具里的卡死，工具必须改成异步 `spawn`（Reina 和 Claude Code 都是这么做的），让事件循环在工具执行期间保持转动。
 
 ### ③ 墙钟硬顶 + 活性延期：到点先验尸，再决定杀不杀
 
@@ -98,7 +100,7 @@ setTimeout(() => {
 
 ## 接进你的 agent
 
-[agent.mjs](./agent.mjs) 里 task 的 handler 就是上面四件事的串联，注意看门狗是**套**在子代理外面的，子代理自己毫不知情：
+[agent.mjs](./agent.mjs) 里 task 的 handler 就是上面五件事的串联，注意看门狗是**套**在子代理外面的，子代理自己毫不知情：
 
 ```js
 const { disposition, result, durationMs } = await runChildWithWatchdog(adapter, PROD_LIMITS);

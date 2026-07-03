@@ -25,7 +25,7 @@ const CASES = [
   },
   {
     title: "④ 不走 tool 通道：把调用裹在 ```json 代码块里",
-    name: "run_shell",
+    name: "read_file",
     args: '我打算读一下配置：\n```json\n{"path":"src/config.ts"}\n```\n这样能看到默认值。',
   },
   {

@@ -35,14 +35,23 @@ export function shouldCompact({ usage, contextWindow, triggerPercent = 75, messa
 //   b) 分割点回拉到最后一条真实用户消息（role === "user"），让"用户到底让我
 //      干嘛"逐字活过压缩。长任务里这条消息往往在几十条工具结果之前——不回拉，
 //      它就会被摘要转述，而转述必然走样（Reina 真实修过的坑，见 README）。
+//      注意"真实"二字：看门狗的纠偏 prompt、上一次压缩的摘要，也都是
+//      role:"user" 塞进历史的——锚点若停在它们身上，真正的启动指令照样被
+//      转述丢失。所以要按已知前缀把合成消息排除掉。
 //      回拉有上限（maxAnchorChars）：保留区太大，压缩就腾不出空间了。
 //   c) 语法约束：OpenAI 格式里 role:"tool" 消息必须紧跟它的 assistant
 //      tool_calls 消息，切口不能落在一对中间，否则下一次请求直接 400。
+// 循环自己塞进历史的 role:"user" 消息，都以这些前缀开头（见 compactMessages
+// 和 loop-budget 的 repairPrompt）——它们不是"用户让我干嘛"，不能当锚点。
+const SYNTHETIC_USER_PREFIXES = ["[上下文压缩]", "自动纠偏触发："];
+const isRealUser = (m) =>
+  m.role === "user" && !SYNTHETIC_USER_PREFIXES.some((p) => String(m.content ?? "").startsWith(p));
+
 export function compactSplitIndex(messages, { keepRecent = 8, maxAnchorChars = 40_000 } = {}) {
   if (messages.length <= keepRecent) return 0;
   let keepFrom = messages.length - keepRecent;
 
-  const lastUser = messages.findLastIndex((m) => m.role === "user");
+  const lastUser = messages.findLastIndex(isRealUser);
   if (lastUser >= 0 && lastUser < keepFrom) {
     const anchoredChars = charsOf(messages.slice(lastUser));
     if (anchoredChars <= maxAnchorChars) keepFrom = lastUser;

@@ -117,7 +117,8 @@ const REGISTRY = {
       if (first === -1) return `编辑失败：old_string 在 ${p} 中找不到。请先 read_file 确认原文。`;
       if (text.indexOf(old_string, first + 1) !== -1)
         return `编辑失败：old_string 在 ${p} 中出现多次。请带上更多上下文让它唯一。`;
-      writeFileSync(p, text.replace(old_string, new_string));
+      // 不能用 text.replace(old, new)：new_string 里的 $$ / $& 会被 JS 当替换模式展开，静默写坏文件。
+      writeFileSync(p, text.slice(0, first) + new_string + text.slice(first + old_string.length));
       return `已编辑 ${p}`;
     },
   },

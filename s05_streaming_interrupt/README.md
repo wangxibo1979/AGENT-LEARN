@@ -122,6 +122,7 @@ node s05_streaming_interrupt/demo.mjs
   修复前：user → assistant+2calls → tool(call_test)
     悬空：call_read 没有 tool 结果；参数断裂："{\"path\":\"READ"
   修复后：user → assistant+2calls → tool(call_read) → tool(call_test)（回填 1 条）
+    合成结果："(用户中断了执行，该工具未运行——不是工具失败，需要时可以重新调用)"
     参数修复："{}"
   再跑一遍修复（应当无操作、幂等）：回填 0 条
 ```

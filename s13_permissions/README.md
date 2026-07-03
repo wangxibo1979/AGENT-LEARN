@@ -34,7 +34,7 @@ node s13_permissions/demo.mjs
   ✅ 放行    run_shell(git status)         命中规则 [allow "git status…"]
   🚫 硬拒   run_shell(git push origin main) 命中规则 [deny "git push…"]
   🚫 硬拒   run_shell(rm -rf node_modules)  命中规则 [deny "rm -rf…"]
-  ❓ 问用户   read_file(.env.local)          无规则命中 → default
+  🚫 硬拒   read_file(.env.local)          命中规则 [deny **/.env*]
   ✅ 放行    read_file(src/engine.ts)       命中规则 [allow src/**]
   ❓ 问用户   run_shell(npm test)            无规则命中 → default
   ❓ 问用户   write_file(src/new.ts)         无规则命中 → default
@@ -68,10 +68,24 @@ export function evaluatePermission(rules, req, defaultVerdict = "ask") {
 命令前缀匹配前记得先 `trimStart()`——模型偶尔会在命令前带个空格，`" git push"` 不该逃过
 `git push` 的 deny。这种小地方不做，闸就有缝。
 
-### ③ workspace 覆盖 global，靠"排在前面"就够了
+### ③ workspace 覆盖 global：deny 先于一切，allow/ask 才分层
 
 同一套机制天然支持分层：全局规则（`~/.reina`，对所有项目生效）+ 项目规则（`.reina`，只这个项目）。
-合并时**把项目规则排在全局前面**，首匹配就让项目规则自动覆盖全局——不需要任何"优先级"字段。
+第一直觉是"把项目规则排在全局前面"就完了——首匹配让项目规则自动覆盖全局。但这有个洞：
+项目里写一条 `allow: git push`，就能抢在全局 deny 前面命中，**项目配置拆掉了全局的闸**。
+所以合并时 deny 要单独提到链首（不分层级），allow/ask 才按"workspace 在前"分层覆盖：
+
+```js
+export function mergeRules(globalRules, workspaceRules) {
+  const isDeny = (r) => r.verdict === "deny";
+  return [
+    ...workspaceRules.filter(isDeny),   // deny 先于一切，谁写的都一样
+    ...globalRules.filter(isDeny),
+    ...workspaceRules.filter((r) => !isDeny(r)),   // 放行/问：项目覆盖全局
+    ...globalRules.filter((r) => !isDeny(r)),
+  ];
+}
+```
 
 演示的场景 B 里，一个可信的 demo 项目预授权了 `npm test` 和写 `src/**`：
 
@@ -83,8 +97,9 @@ export function evaluatePermission(rules, req, defaultVerdict = "ask") {
 ```
 
 注意最后一条：项目能把 `npm test` 从"问"提升到"放行"，**却提不动 `git push` 的 deny**——
-因为那条 deny 在 global 里、且排在更前面。**放权是加白名单，不是拆闸。** 这条边界很重要：
-你可以让某个信得过的项目少弹几次窗，但不该让项目配置能解除全局的硬拒。
+所有 deny 都合并在链首，workspace 就算写一条 `allow: git push` 也排在它后面、永远轮不到。
+**放权是加白名单，不是拆闸。** 这条边界很重要：你可以让某个信得过的项目少弹几次窗，
+但不该让项目配置能解除全局的硬拒——而且这要由合并顺序**保证**，不能指望项目配置自觉。
 
 ## 接进真实 agent
 
@@ -103,9 +118,10 @@ export function evaluatePermission(rules, req, defaultVerdict = "ask") {
 `&&` 后面）。三态里的 `ask` 对应桌面端弹出的审批卡片，用户点"总是允许"就把这条固化进
 workspace 规则——正是②③的闭环。
 
-Claude Code 侧同款：它的权限系统也是 allow/deny/ask 三态 + 规则匹配，`~/.claude/settings.json`
-里的 `permissions.allow` / `deny` 就是这条链，项目级 `.claude/settings.local.json` 覆盖全局——
-和本章的 workspace-over-global 一模一样。
+Claude Code 侧同款思路：它的权限系统也是 allow/deny/ask 三态 + 规则匹配（`~/.claude/settings.json`
+里的 `permissions.allow` / `deny`，项目级 `.claude/settings.local.json` 叠加）。它同样是
+**deny 无条件优先于 allow**——项目级配置提得动 allow、提不动任何一层的 deny，和本章 ③ 的
+合并语义一致。
 
 ## 动手挑战
 

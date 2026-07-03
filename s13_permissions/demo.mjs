@@ -65,5 +65,5 @@ run(merged, [
   { tool: "run_shell", input: { command: "git push origin main" }, note: "global 的 deny 仍在，workspace 提不动" },
 ]);
 
-console.log("\n关键：workspace 规则排在前 → 首匹配天然让项目规则覆盖全局；");
-console.log("      但危险操作（git push）的 deny 在 global 里照样命中——放权是加白，不是拆闸。");
+console.log("\n关键：allow/ask 按 workspace 在前合并 → 首匹配让项目规则覆盖全局；");
+console.log("      但所有 deny 都提在链首，workspace 写 allow 也抢不过——放权是加白，不是拆闸。");
