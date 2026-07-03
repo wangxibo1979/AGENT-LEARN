@@ -9,6 +9,8 @@
 ![MIT](https://img.shields.io/badge/license-MIT-lightgrey)
 [![Full implementation · Reina](https://img.shields.io/badge/full_implementation-Reina-8A2BE2?logo=github)](https://github.com/Reina-Agent/Reina)
 
+**Jump to**　·　[Who it's for](#who)　·　[Run in 30s](#start)　·　[15 lessons](#toc)　·　[Full impl · Reina](#reina)　·　[Star it](#star)
+
 > A single `while` loop is the whole secret of an agent — **but it only keeps it alive for 5 minutes**.
 > Everything else — what makes it survive 5 *hours* of real work — is what these 15 lessons are about.
 
@@ -20,6 +22,8 @@ Want to understand how coding agents like **Claude Code, Codex, opencode** actua
 > **What makes this different from other "build your own agent" tutorials**: the mechanisms here aren't imagined from API docs. They're ported (and simplified) from a **real, shipping, fully open-source desktop coding agent** — **[Reina](https://github.com/Reina-Agent/Reina)** — and **every error handler, every optimization, is a bug that was actually hit in production**.
 > Done with the 15 lessons and want the production-grade source? Go straight to 👉 **[Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)**
 
+<a id="who"></a>
+
 ## Is this for you
 
 Three quick checks — if any one hits, it's worth your time:
@@ -29,6 +33,8 @@ Three quick checks — if any one hits, it's worth your time:
 - You need to ship an agent at work and want a **production-tested checklist of mechanisms**, not another hello world.
 
 Agents look simple. Try to actually implement one and you'll find there's a lot to learn. **The gap between "it runs" and "it's usable" is an entire layer of engineering nobody explains systematically** — each lesson solves one of these real problems.
+
+<a id="start"></a>
 
 ## Running in 30 seconds
 
@@ -42,6 +48,8 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 No key handy? The self-test mode in [s12](./s12_full_agent/) runs the whole thing end-to-end **without any key**.
 
 Once it's running, read s01 through s15 in order — read each README while running its code.
+
+<a id="toc"></a>
 
 ## Contents
 
@@ -65,6 +73,8 @@ The loop is written in lesson 1 and **barely changes after that** — every mech
 | [s14](./s14_provider_compat/) | Provider compatibility layer | Models spew malformed tool calls (name/args/truncation/prose) — flatten it at the boundary |
 | [s15](./s15_tool_disclosure/) | Progressive tool disclosure | Too many tools blow up context; unshielding shouldn't re-inject the array or bust the cache |
 
+<a id="reina"></a>
+
 ## Full implementation: Reina — these mechanisms in a real product
 
 [![Reina stars](https://img.shields.io/github/stars/Reina-Agent/Reina?style=social)](https://github.com/Reina-Agent/Reina)
@@ -80,6 +90,8 @@ These 15 lessons weren't written in a vacuum — they all come from **[Reina](ht
 | s13 / s14 · Permissions & provider compat | Real-user approval flows and multi-model adaptation |
 
 > 👉 **If these notes helped, don't forget to ⭐ the full version at [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)** — the teaching version explains *why* it's built this way; the main repo gives you production-grade code you can actually ship.
+
+<a id="star"></a>
 
 ## If this helped you
 

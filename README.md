@@ -9,6 +9,8 @@
 ![MIT](https://img.shields.io/badge/license-MIT-lightgrey)
 [![完整实现 · Reina](https://img.shields.io/badge/%E5%AE%8C%E6%95%B4%E5%AE%9E%E7%8E%B0-Reina-8A2BE2?logo=github)](https://github.com/Reina-Agent/Reina)
 
+**快速跳转**　·　[适合谁读](#who)　·　[30 秒跑起来](#start)　·　[15 篇目录](#toc)　·　[完整实现 Reina](#reina)　·　[给个 Star](#star)
+
 > 一个 `while` 循环是 agent 的全部秘密——**但只够它活 5 分钟**。
 > 剩下的部分——让它在真实任务里活过 5 小时——就是这 15 篇笔记记的东西。
 
@@ -20,6 +22,8 @@
 > **和别的"手写 agent"教程不一样的地方**：这里的机制不是照着 API 文档想象的，而是从一个**真实在跑、完整开源的桌面 coding agent 产品**——**[Reina](https://github.com/Reina-Agent/Reina)**——简化移植而来，**每一条报错、每一个机制优化，都是线上踩过的坑**。
 > 学完这 15 篇想看生产级完整源码，直接去 👉 **[Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)**
 
+<a id="who"></a>
+
 ## 这份笔记适合你吗
 
 对着下面三条自查，中一条就值得读：
@@ -29,6 +33,8 @@
 - 你要在工作里落地 agent，想要一份**被生产环境验证过的机制清单**，而不是再看一遍 hello world。
 
 Agent 看起来很简单，真去实现才发现里面大有可学。**从"能跑"到"能用"，中间隔着一整层没人系统讲过的工程**——它会空转烧钱、会吃撑爆窗、会跑半小时忘了最初任务、会因为不懂缓存贵 10 倍、会被卡死的子任务拖住。每一篇解决一个这样的真实问题。
+
+<a id="start"></a>
 
 ## 30 秒跑起来
 
@@ -42,6 +48,8 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 手上一时没有 key？[s12](./s12_full_agent/) 的自测模式**不需要任何 key** 也能端到端跑通全部机制。
 
 跑起来后，从 s01 顺着读到 s15，每篇边读 README 边跑代码即可。
+
+<a id="toc"></a>
 
 ## 目录
 
@@ -65,6 +73,8 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 | [s14](./s14_provider_compat/) | Provider 兼容层 | 模型乱吐 tool call（名字/参数/截断/散文）在边界掰平 |
 | [s15](./s15_tool_disclosure/) | 渐进式工具披露 | 工具多了不撑爆上下文；解蔽别回灌数组、撞缓存 |
 
+<a id="reina"></a>
+
 ## 完整实现：Reina —— 这些机制在真实产品里的样子
 
 [![Reina stars](https://img.shields.io/github/stars/Reina-Agent/Reina?style=social)](https://github.com/Reina-Agent/Reina)
@@ -80,6 +90,8 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 | s13 / s14 · 权限与 Provider 兼容 | 面向真实用户的审批与多模型适配 |
 
 > 👉 **喜欢这套笔记，别忘了给完整版 [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina) 点个 ⭐**——教学版讲清"为什么这么做"，主仓给你"直接拿去用"的生产级代码。
+
+<a id="star"></a>
 
 ## 如果它帮到了你
 
