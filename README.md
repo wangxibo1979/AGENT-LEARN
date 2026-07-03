@@ -2,7 +2,6 @@
 
 **简体中文** · [English](./README_EN.md)
 
-[![GitHub stars](https://img.shields.io/github/stars/7-e1even/learn-agent?style=social)](https://github.com/7-e1even/learn-agent/stargazers)
 ![15 篇](https://img.shields.io/badge/%E7%AC%94%E8%AE%B0-15%20%E7%AF%87-blue)
 ![零依赖](https://img.shields.io/badge/%E4%BE%9D%E8%B5%96-0-brightgreen)
 ![Node ≥ 18](https://img.shields.io/badge/node-%E2%89%A5%2018-339933?logo=node.js&logoColor=white)
@@ -77,9 +76,7 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 
 ## 完整实现：Reina —— 这些机制在真实产品里的样子
 
-[![Reina stars](https://img.shields.io/github/stars/Reina-Agent/Reina?style=social)](https://github.com/Reina-Agent/Reina)
-
-这 15 课不是凭空写的——它们全部来自 **[Reina](https://github.com/Reina-Agent/Reina)**，一个**完整开源、能装能用**的桌面 AI agent（Electron + React + TypeScript）。本仓库把 Reina 的核心机制剥出来、简化成单文件教学版；想看它们在生产代码里真正的样子，去主仓一一对照：
+这 15 篇不是凭空写的——它们全部来自我做 **[Reina](https://github.com/Reina-Agent/Reina)** 时的踩坑记录。Reina 是一个**完整开源、能装能用**的桌面 AI agent（Electron + React + TypeScript）；本仓库是我把它的核心机制剥出来、简化成单文件后留下的学习笔记。想看这些机制在生产代码里真正的样子，去主仓一一对照：
 
 | 你在这里学到的 | 在 Reina 里的完整实现 |
 |---|---|
@@ -89,7 +86,7 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 | s09 / s11 · 子代理与多 agent | 任务图调度与看门狗 |
 | s13 / s14 · 权限与 Provider 兼容 | 面向真实用户的审批与多模型适配 |
 
-> 👉 **喜欢这套笔记，别忘了给完整版 [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina) 点个 ⭐**——教学版讲清"为什么这么做"，主仓给你"直接拿去用"的生产级代码。
+> 👉 **喜欢这套笔记，别忘了给完整版 [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina) 点个 ⭐**——笔记帮你想清"为什么这么做"，主仓给你"直接拿去用"的生产级代码。
 
 <a id="star"></a>
 

@@ -2,7 +2,6 @@
 
 [简体中文](./README.md) · **English**
 
-[![GitHub stars](https://img.shields.io/github/stars/7-e1even/learn-agent?style=social)](https://github.com/7-e1even/learn-agent/stargazers)
 ![15 lessons](https://img.shields.io/badge/lessons-15-blue)
 ![zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
 ![Node ≥ 18](https://img.shields.io/badge/node-%E2%89%A5%2018-339933?logo=node.js&logoColor=white)
@@ -77,9 +76,7 @@ The loop is written in lesson 1 and **barely changes after that** — every mech
 
 ## Full implementation: Reina — these mechanisms in a real product
 
-[![Reina stars](https://img.shields.io/github/stars/Reina-Agent/Reina?style=social)](https://github.com/Reina-Agent/Reina)
-
-These 15 lessons weren't written in a vacuum — they all come from **[Reina](https://github.com/Reina-Agent/Reina)**, a **fully open-source, actually-usable** desktop AI agent (Electron + React + TypeScript). This repo pulls Reina's core mechanisms out and simplifies them into single-file teaching versions; to see what they really look like in production code, go compare against the main repo:
+These 15 notes weren't written in a vacuum — they all come from the potholes I hit building **[Reina](https://github.com/Reina-Agent/Reina)**, a **fully open-source, actually-usable** desktop AI agent (Electron + React + TypeScript). This repo is my study notes from pulling Reina's core mechanisms out and simplifying them into single files; to see what they really look like in production code, go compare against the main repo:
 
 | What you learn here | Its full implementation in Reina |
 |---|---|
@@ -89,7 +86,7 @@ These 15 lessons weren't written in a vacuum — they all come from **[Reina](ht
 | s09 / s11 · Subagents & multi-agent | Task-graph scheduling and the watchdog |
 | s13 / s14 · Permissions & provider compat | Real-user approval flows and multi-model adaptation |
 
-> 👉 **If these notes helped, don't forget to ⭐ the full version at [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)** — the teaching version explains *why* it's built this way; the main repo gives you production-grade code you can actually ship.
+> 👉 **If these notes helped, don't forget to ⭐ the full version at [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)** — the notes reason through *why* it's built this way; the main repo gives you production-grade code you can actually ship.
 
 <a id="star"></a>
 
