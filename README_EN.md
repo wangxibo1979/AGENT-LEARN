@@ -65,9 +65,21 @@ The loop is written in lesson 1 and **barely changes after that** — every mech
 | [s14](./s14_provider_compat/) | Provider compatibility layer | Models spew malformed tool calls (name/args/truncation/prose) — flatten it at the boundary |
 | [s15](./s15_tool_disclosure/) | Progressive tool disclosure | Too many tools blow up context; unshielding shouldn't re-inject the array or bust the cache |
 
-## The full implementation
+## Full implementation: Reina — these mechanisms in a real product
 
-Want to see what these 15 lessons' mechanisms look like in a real product? The complete source lives at **[Reina](https://github.com/Reina-Agent/Reina)** — an open-source desktop AI agent (Electron + React + TypeScript). Every engine, compaction, caching, permission, and provider-compat mechanism referenced in the "how the real product does it" sections has its full implementation there.
+[![Reina stars](https://img.shields.io/github/stars/Reina-Agent/Reina?style=social)](https://github.com/Reina-Agent/Reina)
+
+These 15 lessons weren't written in a vacuum — they all come from **[Reina](https://github.com/Reina-Agent/Reina)**, a **fully open-source, actually-usable** desktop AI agent (Electron + React + TypeScript). This repo pulls Reina's core mechanisms out and simplifies them into single-file teaching versions; to see what they really look like in production code, go compare against the main repo:
+
+| What you learn here | Its full implementation in Reina |
+|---|---|
+| s01 · The main loop | The agent engine driving the whole app |
+| s03 / s04 · Budget & spill | The real cost & context guardrails in production |
+| s06 / s07 · Compaction & cache | What keeps long sessions from blowing up and cuts the bill 10× |
+| s09 / s11 · Subagents & multi-agent | Task-graph scheduling and the watchdog |
+| s13 / s14 · Permissions & provider compat | Real-user approval flows and multi-model adaptation |
+
+> 👉 **If these notes helped, don't forget to ⭐ the full version at [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)** — the teaching version explains *why* it's built this way; the main repo gives you production-grade code you can actually ship.
 
 ## If this helped you
 

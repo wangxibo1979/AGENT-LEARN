@@ -65,9 +65,21 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 | [s14](./s14_provider_compat/) | Provider 兼容层 | 模型乱吐 tool call（名字/参数/截断/散文）在边界掰平 |
 | [s15](./s15_tool_disclosure/) | 渐进式工具披露 | 工具多了不撑爆上下文；解蔽别回灌数组、撞缓存 |
 
-## 完整实现
+## 完整实现：Reina —— 这些机制在真实产品里的样子
 
-这 15 课的机制在真实产品里长什么样？完整源码在 **[Reina](https://github.com/Reina-Agent/Reina)** —— 一个开源的桌面 AI agent（Electron + React + TypeScript）。每篇"真实产品对照"提到的引擎、压缩、缓存、权限、Provider 兼容层，都能在里面找到对应实现，欢迎对照阅读。
+[![Reina stars](https://img.shields.io/github/stars/Reina-Agent/Reina?style=social)](https://github.com/Reina-Agent/Reina)
+
+这 15 课不是凭空写的——它们全部来自 **[Reina](https://github.com/Reina-Agent/Reina)**，一个**完整开源、能装能用**的桌面 AI agent（Electron + React + TypeScript）。本仓库把 Reina 的核心机制剥出来、简化成单文件教学版；想看它们在生产代码里真正的样子，去主仓一一对照：
+
+| 你在这里学到的 | 在 Reina 里的完整实现 |
+|---|---|
+| s01 · 主循环 | 驱动整个 app 的 agent 引擎 |
+| s03 / s04 · 预算与溢出 | 线上真实的成本与上下文护栏 |
+| s06 / s07 · 压缩与缓存 | 长会话不爆窗、账单省 10× 的关键 |
+| s09 / s11 · 子代理与多 agent | 任务图调度与看门狗 |
+| s13 / s14 · 权限与 Provider 兼容 | 面向真实用户的审批与多模型适配 |
+
+> 👉 **喜欢这套笔记，别忘了给完整版 [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina) 点个 ⭐**——教学版讲清"为什么这么做"，主仓给你"直接拿去用"的生产级代码。
 
 ## 如果它帮到了你
 
