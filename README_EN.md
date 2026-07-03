@@ -78,13 +78,13 @@ The loop is written in lesson 1 and **barely changes after that** — every mech
 
 These 15 notes weren't written in a vacuum — they all come from the potholes I hit building **[Reina](https://github.com/Reina-Agent/Reina)**, a **fully open-source, actually-usable** desktop AI agent (Electron + React + TypeScript). This repo is my study notes from pulling Reina's core mechanisms out and simplifying them into single files; to see what they really look like in production code, go compare against the main repo:
 
-| What you learn here | Its full implementation in Reina |
+| What you learn here | Jump into Reina's real code |
 |---|---|
-| s01 · The main loop | The agent engine driving the whole app |
-| s03 / s04 · Budget & spill | The real cost & context guardrails in production |
-| s06 / s07 · Compaction & cache | What keeps long sessions from blowing up and cuts the bill 10× |
-| s09 / s11 · Subagents & multi-agent | Task-graph scheduling and the watchdog |
-| s13 / s14 · Permissions & provider compat | Real-user approval flows and multi-model adaptation |
+| s01 · The main loop | The agent engine → [`core/engine.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/engine.ts) |
+| s03 / s04 · Budget & spill | Cost & context guardrails → [`core/loop-budget.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/loop-budget.ts) |
+| s06 / s07 · Compaction & cache | Compaction [`compaction.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/compaction.ts) · cache stability [`engine-prompt.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/engine-prompt.ts) |
+| s09 / s11 · Subagents & multi-agent | Watchdog [`subagent/activity.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/subagent/activity.ts) · scheduling [`subagent/manager.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/subagent/manager.ts) |
+| s13 / s14 · Permissions & provider compat | Approval [`permissions.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/permissions.ts) · provider compat [`providers/tool-compat.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/providers/src/tool-compat.ts) |
 
 > 👉 **If these notes helped, don't forget to ⭐ the full version at [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)** — the notes reason through *why* it's built this way; the main repo gives you production-grade code you can actually ship.
 

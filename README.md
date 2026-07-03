@@ -78,13 +78,13 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 
 这 15 篇不是凭空写的——它们全部来自我做 **[Reina](https://github.com/Reina-Agent/Reina)** 时的踩坑记录。Reina 是一个**完整开源、能装能用**的桌面 AI agent（Electron + React + TypeScript）；本仓库是我把它的核心机制剥出来、简化成单文件后留下的学习笔记。想看这些机制在生产代码里真正的样子，去主仓一一对照：
 
-| 你在这里学到的 | 在 Reina 里的完整实现 |
+| 你在这里学到的 | 点进 Reina 看实战代码 |
 |---|---|
-| s01 · 主循环 | 驱动整个 app 的 agent 引擎 |
-| s03 / s04 · 预算与溢出 | 线上真实的成本与上下文护栏 |
-| s06 / s07 · 压缩与缓存 | 长会话不爆窗、账单省 10× 的关键 |
-| s09 / s11 · 子代理与多 agent | 任务图调度与看门狗 |
-| s13 / s14 · 权限与 Provider 兼容 | 面向真实用户的审批与多模型适配 |
+| s01 · 主循环 | agent 引擎 → [`core/engine.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/engine.ts) |
+| s03 / s04 · 预算与溢出 | 成本与上下文护栏 → [`core/loop-budget.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/loop-budget.ts) |
+| s06 / s07 · 压缩与缓存 | 压缩 [`compaction.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/compaction.ts) · 缓存稳定 [`engine-prompt.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/engine-prompt.ts) |
+| s09 / s11 · 子代理与多 agent | 看门狗 [`subagent/activity.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/subagent/activity.ts) · 调度 [`subagent/manager.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/subagent/manager.ts) |
+| s13 / s14 · 权限与 Provider 兼容 | 审批 [`permissions.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/core/src/permissions.ts) · 模型兼容 [`providers/tool-compat.ts`](https://github.com/Reina-Agent/Reina/blob/main/packages/providers/src/tool-compat.ts) |
 
 > 👉 **喜欢这套笔记，别忘了给完整版 [Reina-Agent/Reina](https://github.com/Reina-Agent/Reina) 点个 ⭐**——笔记帮你想清"为什么这么做"，主仓给你"直接拿去用"的生产级代码。
 
