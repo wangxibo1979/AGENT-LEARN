@@ -2,26 +2,41 @@
 
 [简体中文](./README.md) · **English**
 
-> A single `while` loop is the whole secret of an agent — **but it only keeps it alive for 5 minutes**.
-> Everything else — what makes it survive 5 *hours* of real work — is what these notes are about.
+[![GitHub stars](https://img.shields.io/github/stars/7-e1even/learn-agent?style=social)](https://github.com/7-e1even/learn-agent/stargazers)
+![15 lessons](https://img.shields.io/badge/lessons-15-blue)
+![zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
+![Node ≥ 18](https://img.shields.io/badge/node-%E2%89%A5%2018-339933?logo=node.js&logoColor=white)
+![MIT](https://img.shields.io/badge/license-MIT-lightgrey)
 
-Want to understand how coding agents like **Claude Code, Codex, opencode** actually work under the hood? This repo is my field notes from the potholes I hit building my own agent from scratch.
+> A single `while` loop is the whole secret of an agent — **but it only keeps it alive for 5 minutes**.
+> Everything else — what makes it survive 5 *hours* of real work — is what these 15 lessons are about.
+
+Want to understand how coding agents like **Claude Code, Codex, opencode** actually work under the hood? This repo is my field notes from the potholes I hit building my own agent from scratch: **15 progressive lessons + 15 zero-dependency, single-file, runnable programs**, each one fixing a real failure.
+
+![15 mechanisms, all growing back onto the same loop](./assets/s12-mechanism-map.svg)
 
 > **What makes this different from other "build your own agent" tutorials**: the mechanisms here aren't imagined from API docs. They're ported (and simplified) from a **real, shipping, fully open-source desktop coding agent** ([Reina](https://github.com/Reina-Agent/Reina)) — **every error handler, every optimization, is a bug that was actually hit in production**.
 
-## What this is
+## Is this for you
 
-They look simple. Try to actually implement one and you'll find there's a lot to learn.
-**But the gap between "it runs" and "it's usable" is an entire layer of engineering nobody explains systematically** — it burns money spinning in circles, blows past the context window, forgets its original task after half an hour, pays 10× more because it doesn't understand caching, and gets dragged down by a stuck subtask. Each lesson solves one of these real problems.
+Three quick checks — if any one hits, it's worth your time:
 
-All code is **zero-dependency, single-file, runs on Node 18+**, and works with any OpenAI-compatible key (DeepSeek / Kimi / GLM / OpenRouter / local Ollama).
+- You've built an agent demo from a tutorial, but it falls apart on real tasks: **burns money spinning in circles, blows the context window, forgets its original task after half an hour**;
+- You use Claude Code every day and want to know how the "magic" — compaction, caching, subagents, permission gates — **actually works inside**;
+- You need to ship an agent at work and want a **production-tested checklist of mechanisms**, not another hello world.
 
-## Quick start
+Agents look simple. Try to actually implement one and you'll find there's a lot to learn. **The gap between "it runs" and "it's usable" is an entire layer of engineering nobody explains systematically** — each lesson solves one of these real problems.
+
+## Running in 30 seconds
+
+All code is **zero-dependency, single-file, runs on Node 18+**, and works with any OpenAI-compatible key (DeepSeek / Kimi / GLM / OpenRouter / local Ollama):
 
 ```sh
 git clone https://github.com/7-e1even/learn-agent && cd learn-agent
 AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 ```
+
+No key handy? The self-test mode in [s12](./s12_full_agent/) runs the whole thing end-to-end **without any key**.
 
 Once it's running, read s01 through s15 in order — read each README while running its code.
 
@@ -50,6 +65,10 @@ The loop is written in lesson 1 and **barely changes after that** — every mech
 ## The full implementation
 
 Want to see what these 15 lessons' mechanisms look like in a real product? The complete source lives at **[Reina](https://github.com/Reina-Agent/Reina)** — an open-source desktop AI agent (Electron + React + TypeScript). Every engine, compaction, caching, permission, and provider-compat mechanism referenced in the "how the real product does it" sections has its full implementation there.
+
+## If this helped you
+
+No course to sell, no newsletter funnel — just notes and code. If this repo saved you from stepping in even one pothole, a ⭐ is the only way more people will find it. Spot a factual error or a code bug? Open an issue and let's argue it out.
 
 ## License
 
