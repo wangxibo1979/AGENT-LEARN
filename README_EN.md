@@ -2,24 +2,24 @@
 
 [简体中文](./README.md) · **English**
 
-![15 lessons](https://img.shields.io/badge/lessons-15-blue)
+![lessons](https://img.shields.io/badge/lessons-ongoing-blue)
 ![zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
 ![Node ≥ 18](https://img.shields.io/badge/node-%E2%89%A5%2018-339933?logo=node.js&logoColor=white)
 ![MIT](https://img.shields.io/badge/license-MIT-lightgrey)
 [![Full implementation · Reina](https://img.shields.io/badge/full_implementation-Reina-8A2BE2?logo=github)](https://github.com/Reina-Agent/Reina)
 
-**Jump to**　·　[Who it's for](#who)　·　[Run in 30s](#start)　·　[15 lessons](#toc)　·　[Full impl · Reina](#reina)　·　[Star it](#star)
+**Jump to**　·　[Who it's for](#who)　·　[Run in 30s](#start)　·　[All lessons](#toc)　·　[Full impl · Reina](#reina)　·　[Star it](#star)
 
 > A single `while` loop is the whole secret of an agent — **but it only keeps it alive for 5 minutes**.
-> Everything else — what makes it survive 5 *hours* of real work — is what these 15 lessons are about.
+> Everything else — what makes it survive 5 *hours* of real work — is what these lessons are about.
 
-Want to understand how coding agents like **Claude Code, Codex, opencode** actually work under the hood? This repo is my field notes from the potholes I hit building my own agent from scratch: **15 progressive lessons + 15 zero-dependency, single-file, runnable programs**, each one fixing a real failure.
+Want to understand how coding agents like **Claude Code, Codex, opencode** actually work under the hood? This repo is my field notes from the potholes I hit building my own agent from scratch: **a growing series of progressive lessons, each with a zero-dependency, single-file, runnable program**, each one fixing a real failure.
 
-![15 mechanisms, all growing back onto the same loop](./assets/s12-mechanism-map.svg)
+![every mechanism grows back onto the same loop](./assets/s12-mechanism-map.svg)
 
 > [!IMPORTANT]
 > **What makes this different from other "build your own agent" tutorials**: the mechanisms here aren't imagined from API docs. They're ported (and simplified) from a **real, shipping, fully open-source desktop coding agent** — **[Reina](https://github.com/Reina-Agent/Reina)** — and **every error handler, every optimization, is a bug that was actually hit in production**.
-> Done with the 15 lessons and want the production-grade source? Go straight to 👉 **[Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)**
+> Done with the lessons and want the production-grade source? Go straight to 👉 **[Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)**
 
 <a id="who"></a>
 
@@ -46,7 +46,7 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 
 No key handy? The self-test mode in [s12](./s12_full_agent/) runs the whole thing end-to-end **without any key**.
 
-Once it's running, read s01 through s15 in order — read each README while running its code.
+Once it's running, read from s01 onward in order — read each README while running its code.
 
 <a id="toc"></a>
 
@@ -76,7 +76,7 @@ The loop is written in lesson 1 and **barely changes after that** — every mech
 
 ## Full implementation: Reina — these mechanisms in a real product
 
-These 15 notes weren't written in a vacuum — they all come from the potholes I hit building **[Reina](https://github.com/Reina-Agent/Reina)**, a **fully open-source, actually-usable** desktop AI agent (Electron + React + TypeScript). This repo is my study notes from pulling Reina's core mechanisms out and simplifying them into single files; to see what they really look like in production code, go compare against the main repo:
+These notes weren't written in a vacuum — they all come from the potholes I hit building **[Reina](https://github.com/Reina-Agent/Reina)**, a **fully open-source, actually-usable** desktop AI agent (Electron + React + TypeScript). This repo is my study notes from pulling Reina's core mechanisms out and simplifying them into single files; to see what they really look like in production code, go compare against the main repo:
 
 | What you learn here | Jump into Reina's real code |
 |---|---|

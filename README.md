@@ -2,24 +2,24 @@
 
 **简体中文** · [English](./README_EN.md)
 
-![15 篇](https://img.shields.io/badge/%E7%AC%94%E8%AE%B0-15%20%E7%AF%87-blue)
+![持续更新](https://img.shields.io/badge/%E7%AC%94%E8%AE%B0-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0-blue)
 ![零依赖](https://img.shields.io/badge/%E4%BE%9D%E8%B5%96-0-brightgreen)
 ![Node ≥ 18](https://img.shields.io/badge/node-%E2%89%A5%2018-339933?logo=node.js&logoColor=white)
 ![MIT](https://img.shields.io/badge/license-MIT-lightgrey)
 [![完整实现 · Reina](https://img.shields.io/badge/%E5%AE%8C%E6%95%B4%E5%AE%9E%E7%8E%B0-Reina-8A2BE2?logo=github)](https://github.com/Reina-Agent/Reina)
 
-**快速跳转**　·　[适合谁读](#who)　·　[30 秒跑起来](#start)　·　[15 篇目录](#toc)　·　[完整实现 Reina](#reina)　·　[给个 Star](#star)
+**快速跳转**　·　[适合谁读](#who)　·　[30 秒跑起来](#start)　·　[全部目录](#toc)　·　[完整实现 Reina](#reina)　·　[给个 Star](#star)
 
 > 一个 `while` 循环是 agent 的全部秘密——**但只够它活 5 分钟**。
-> 剩下的部分——让它在真实任务里活过 5 小时——就是这 15 篇笔记记的东西。
+> 剩下的部分——让它在真实任务里活过 5 小时——就是这一系列笔记记的东西。
 
-想搞懂 **Claude Code、Codex、opencode** 这类 coding agent 内部到底怎么实现？这个仓库是我从 0 开发自己的 agent 时的踩坑笔记：**15 篇渐进式笔记 + 15 份零依赖、单文件、直接能跑的代码**，每篇解决一个真实翻车现场。
+想搞懂 **Claude Code、Codex、opencode** 这类 coding agent 内部到底怎么实现？这个仓库是我从 0 开发自己的 agent 时的踩坑笔记：**一系列渐进式笔记，每篇配一份零依赖、单文件、直接能跑的代码**，每篇解决一个真实翻车现场。
 
-![15 套机制，最后都长回同一个循环上](./assets/s12-mechanism-map.svg)
+![所有机制，最后都长回同一个循环上](./assets/s12-mechanism-map.svg)
 
 > [!IMPORTANT]
 > **和别的"手写 agent"教程不一样的地方**：这里的机制不是照着 API 文档想象的，而是从一个**真实在跑、完整开源的桌面 coding agent 产品**——**[Reina](https://github.com/Reina-Agent/Reina)**——简化移植而来，**每一条报错、每一个机制优化，都是线上踩过的坑**。
-> 学完这 15 篇想看生产级完整源码，直接去 👉 **[Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)**
+> 学完这些笔记想看生产级完整源码，直接去 👉 **[Reina-Agent/Reina](https://github.com/Reina-Agent/Reina)**
 
 <a id="who"></a>
 
@@ -46,7 +46,7 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 
 手上一时没有 key？[s12](./s12_full_agent/) 的自测模式**不需要任何 key** 也能端到端跑通全部机制。
 
-跑起来后，从 s01 顺着读到 s15，每篇边读 README 边跑代码即可。
+跑起来后，从 s01 顺着往后读，每篇边读 README 边跑代码即可。
 
 <a id="toc"></a>
 
@@ -76,7 +76,7 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 
 ## 完整实现：Reina —— 这些机制在真实产品里的样子
 
-这 15 篇不是凭空写的——它们全部来自我做 **[Reina](https://github.com/Reina-Agent/Reina)** 时的踩坑记录。Reina 是一个**完整开源、能装能用**的桌面 AI agent（Electron + React + TypeScript）；本仓库是我把它的核心机制剥出来、简化成单文件后留下的学习笔记。想看这些机制在生产代码里真正的样子，去主仓一一对照：
+这些笔记不是凭空写的——它们全部来自我做 **[Reina](https://github.com/Reina-Agent/Reina)** 时的踩坑记录。Reina 是一个**完整开源、能装能用**的桌面 AI agent（Electron + React + TypeScript）；本仓库是我把它的核心机制剥出来、简化成单文件后留下的学习笔记。想看这些机制在生产代码里真正的样子，去主仓一一对照：
 
 | 你在这里学到的 | 点进 Reina 看实战代码 |
 |---|---|
