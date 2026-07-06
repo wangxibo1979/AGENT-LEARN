@@ -51,6 +51,7 @@ The main loop is finished in the first note and barely changes afterwards; every
 | [s14](./s14_provider_compat/) | Provider compatibility | Handling malformed tool calls from models (names, arguments, truncation, prose) |
 | [s15](./s15_tool_disclosure/) | Progressive tool disclosure | Keeping context small with many tools; revealing tools without busting the cache |
 | [s16](./s16_moa/) | MoA multi-model deliberation | Cost analysis of adding multi-model deliberation to a tool loop; deciding against it is a valid conclusion |
+| [s17](./s17_self_evolution/) | Self-evolution review loop | Forking a restricted self every N turns to distill the conversation into memory/skills; the cadence, cache, and isolation bills |
 
 ## Comparing with Reina
 

@@ -51,6 +51,7 @@ AGENT_API_KEY=sk-xxx node s01_agent_loop/agent.mjs
 | [s14](./s14_provider_compat/) | Provider 兼容层 | 处理模型输出的畸形 tool call（名字、参数、截断、散文） |
 | [s15](./s15_tool_disclosure/) | 渐进式工具披露 | 工具数量多时不撑爆上下文；解蔽时避免破坏缓存 |
 | [s16](./s16_moa/) | MoA 多模型合议 | 多模型合议接入工具循环的成本分析；评估后放弃也是有效结论 |
+| [s17](./s17_self_evolution/) | 自进化复盘环 | 每 N 轮 fork 一个受限的自己蒸馏对话、写记忆/技能；节奏、缓存、隔离三笔账 |
 
 ## 与 Reina 的对照
 

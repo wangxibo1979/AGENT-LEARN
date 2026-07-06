@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="470" viewBox="0 0 920 470" role="img" aria-labelledby="title desc">
+  <title id="title">s17 self-evolution review loop</title>
+  <desc id="desc">Every N turns the agent forks a restricted self-review child on the same model (warm cache); it distills the conversation into the global notebook and skills, which feed back into the next turn's prompt. The fork shares the session id for cache warmth, so persistence must be disabled to keep the review prompt out of the real conversation.</desc>
+  <style>
+    .bg{fill:#f8fafc}.box{fill:#fff;stroke:#334155;stroke-width:2}.stable{fill:#dcfce7}.defer{fill:#e0f2fe}.msg{fill:#fef3c7}.bad{fill:#fee2e2}.label{font:700 22px Arial,"Microsoft YaHei",sans-serif;fill:#0f172a}.txt{font:16px Arial,"Microsoft YaHei",sans-serif;fill:#334155}.small{font:14px Arial,"Microsoft YaHei",sans-serif;fill:#475569}.arrow{stroke:#475569;stroke-width:2.4;fill:none;marker-end:url(#arrow)}.feed{stroke:#16a34a;stroke-width:2.4;fill:none;stroke-dasharray:7 6;marker-end:url(#arrowg)}
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker>
+    <marker id="arrowg" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/></marker>
+  </defs>
+  <rect class="bg" width="920" height="470"/>
+  <text x="40" y="46" class="label">自进化复盘环：每 N 轮 fork 一个受限的自己，蒸馏对话 → 记忆/技能</text>
+
+  <!-- main loop -->
+  <rect class="box msg" x="40" y="78" width="200" height="70" rx="12"/>
+  <text x="140" y="108" class="txt" text-anchor="middle" font-weight="700">主对话 · 第 N 轮</text>
+  <text x="140" y="132" class="small" text-anchor="middle">回复交付后才触发复盘</text>
+
+  <!-- cadence gate -->
+  <rect class="box defer" x="300" y="66" width="240" height="94" rx="12"/>
+  <text x="420" y="94" class="txt" text-anchor="middle" font-weight="700">节奏闸门（两条独立）</text>
+  <text x="420" y="120" class="small" text-anchor="middle">记忆 · 按用户轮数（每 10 轮）</text>
+  <text x="420" y="142" class="small" text-anchor="middle">技能 · 按工具迭代数（累计 10 次）</text>
+
+  <path class="arrow" d="M240,113 L300,113"/>
+  <text x="270" y="104" class="small" text-anchor="middle">计数</text>
+
+  <!-- fork -->
+  <rect class="box" x="300" y="218" width="240" height="110" rx="12"/>
+  <text x="420" y="246" class="txt" text-anchor="middle" font-weight="700">复盘 fork（后台线程）</text>
+  <text x="420" y="270" class="small" text-anchor="middle">同模型 → 吃热缓存（默认）</text>
+  <text x="420" y="290" class="small" text-anchor="middle">工具白名单：只有记忆/技能</text>
+  <text x="420" y="310" class="small" text-anchor="middle">读对话快照 → 蒸馏</text>
+
+  <path class="arrow" d="M420,160 L420,218"/>
+  <text x="452" y="192" class="small">到点</text>
+
+  <!-- outputs -->
+  <rect class="box stable" x="620" y="196" width="260" height="60" rx="12"/>
+  <text x="750" y="222" class="txt" text-anchor="middle" font-weight="700">全局记忆本 g_*.md</text>
+  <text x="750" y="242" class="small" text-anchor="middle">用户偏好 · 通用事实（跨项目）</text>
+
+  <rect class="box stable" x="620" y="284" width="260" height="60" rx="12"/>
+  <text x="750" y="310" class="txt" text-anchor="middle" font-weight="700">技能 SKILL.md</text>
+  <text x="750" y="330" class="small" text-anchor="middle">可复用流程（改本次加载的 &gt; 新建）</text>
+
+  <path class="arrow" d="M540,258 L620,232"/>
+  <path class="arrow" d="M540,290 L620,308"/>
+  <text x="580" y="256" class="small" text-anchor="middle">写</text>
+
+  <!-- compounding feedback -->
+  <path class="feed" d="M750,196 C750,120 620,113 540,113 L544,113"/>
+  <text x="700" y="150" class="small" fill="#16a34a" text-anchor="middle">下一轮 prompt 注入 → 知识复利</text>
+
+  <!-- isolation callout -->
+  <rect class="box bad" x="40" y="384" width="840" height="66" rx="12"/>
+  <text x="60" y="412" class="txt" font-weight="700">隔离的必付账单：</text>
+  <text x="60" y="436" class="small">fork 共享 session_id 换热缓存 → 必须 _persist_disabled + 独立 messages，否则「复盘上面的对话」写回主 session，下一轮 agent 变身复盘器丢下真活（#38727）。</text>
+</svg>
