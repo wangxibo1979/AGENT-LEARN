@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="430" viewBox="0 0 920 430" role="img" aria-labelledby="title desc">
+  <title id="title">s16 MoA advisors in the agent loop</title>
+  <desc id="desc">Reference advisors receive a flattened advisory view of the conversation; their synthesized guidance is appended at the tail of the acting model's messages, keeping the cache prefix stable.</desc>
+  <style>
+    .bg{fill:#f8fafc}.box{fill:#fff;stroke:#334155;stroke-width:2;rx:12}.stable{fill:#dcfce7}.defer{fill:#e0f2fe}.msg{fill:#fef3c7}.bad{fill:#fee2e2}.label{font:700 22px Arial,"Microsoft YaHei",sans-serif;fill:#0f172a}.txt{font:16px Arial,"Microsoft YaHei",sans-serif;fill:#334155}.small{font:14px Arial,"Microsoft YaHei",sans-serif;fill:#475569}.arrow{stroke:#475569;stroke-width:2.4;fill:none;marker-end:url(#arrow)}.badline{stroke:#ef4444;stroke-width:2.4;fill:none;stroke-dasharray:7 6;marker-end:url(#arrow)}
+  </style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker></defs>
+  <rect class="bg" width="920" height="430"/>
+  <text x="40" y="48" class="label">MoA 顾问团：扁平化咨询视图进参谋，综合建议进消息末尾</text>
+
+  <rect class="stable" x="52" y="108" width="230" height="118"/>
+  <text x="167" y="138" text-anchor="middle" class="txt">acting transcript</text>
+  <text x="167" y="164" text-anchor="middle" class="small">system · task · tool calls</text>
+  <text x="167" y="186" text-anchor="middle" class="small">tool results (9k chars)</text>
+  <text x="167" y="208" text-anchor="middle" class="small">cache 前缀保持稳定</text>
+
+  <rect class="msg" x="350" y="108" width="200" height="118"/>
+  <text x="450" y="138" text-anchor="middle" class="txt">advisory view</text>
+  <text x="450" y="164" text-anchor="middle" class="small">drop system · flatten tools</text>
+  <text x="450" y="186" text-anchor="middle" class="small">head+tail truncate results</text>
+  <text x="450" y="208" text-anchor="middle" class="small">end on synthetic user</text>
+
+  <rect class="defer" x="630" y="84" width="230" height="52"/>
+  <text x="745" y="116" text-anchor="middle" class="txt">advisor 1（无工具）</text>
+  <rect class="defer" x="630" y="146" width="230" height="52"/>
+  <text x="745" y="178" text-anchor="middle" class="txt">advisor 2（无工具）</text>
+  <rect class="defer" x="630" y="208" width="230" height="52"/>
+  <text x="745" y="240" text-anchor="middle" class="txt">advisor 3（无工具）</text>
+
+  <path class="arrow" d="M282 167 H344"/>
+  <path class="arrow" d="M550 148 L624 110"/>
+  <path class="arrow" d="M550 167 H624"/>
+  <path class="arrow" d="M550 186 L624 224"/>
+
+  <rect class="stable" x="350" y="300" width="330" height="74"/>
+  <text x="515" y="330" text-anchor="middle" class="txt">建议追加在消息末尾</text>
+  <text x="515" y="354" text-anchor="middle" class="small">前缀复用 99.9% · 建议占 recency 位</text>
+
+  <path class="arrow" d="M745 266 Q745 337 686 337"/>
+  <path class="arrow" d="M344 337 Q167 337 167 232"/>
+  <text x="240" y="322" class="small">acting model 照常调工具</text>
+
+  <rect class="bad" x="52" y="300" width="230" height="74"/>
+  <text x="167" y="330" text-anchor="middle" class="txt">❌ 合并进任务消息（前部）</text>
+  <text x="167" y="354" text-anchor="middle" class="small">前缀复用 15.8% · 每步全价</text>
+</svg>

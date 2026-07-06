@@ -4,4 +4,6 @@ my-agent/
 *.log
 .agent-spill/
 .sessions/
+参考/
+.obsidian/
 
