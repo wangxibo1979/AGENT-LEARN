@@ -1,10 +1,10 @@
-# learn-agent · Build an AI Agent from Scratch
+# learn-agent · Advanced Notes on Building an AI Agent
 
 [简体中文](./README.md) · **English**
 
-A series of notes on how coding agents (tools like Claude Code, Codex, opencode) are implemented internally. Each note covers one mechanism and comes with a zero-dependency, single-file Node program you can run directly.
+A series of advanced notes I compiled while developing [Reina](https://github.com/Reina-Agent/Reina), a desktop AI agent, covering how coding agents (tools like Claude Code, Codex, opencode) are implemented internally. Each note covers one mechanism and comes with a zero-dependency, single-file Node program you can run directly.
 
-The material comes from my experience building [Reina](https://github.com/Reina-Agent/Reina), a desktop AI agent: I extracted its core mechanisms, simplified them into single-file programs, and organized them in progressive order. The mechanisms here are not guessed from API docs — they are approaches validated in a real product.
+The notes extract Reina's core mechanisms, simplify them into single-file programs, and organize them in progressive order. The mechanisms here are not guessed from API docs — they are approaches validated in a real product.
 
 ![every mechanism builds on the same loop](./assets/s12-mechanism-map.svg)
 

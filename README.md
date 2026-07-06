@@ -1,10 +1,10 @@
-# learn-agent · 从零实现一个 AI Agent
+# learn-agent · AI Agent 开发进阶笔记
 
 **简体中文** · [English](./README_EN.md)
 
-这是一系列讲解 coding agent（Claude Code、Codex、opencode 这类工具）内部实现机制的笔记。每篇笔记讲一个机制，配一份零依赖、单文件、可以直接运行的 Node 程序。
+这是我开发桌面 agent [Reina](https://github.com/Reina-Agent/Reina) 过程中整理的一系列进阶笔记，讲解 coding agent（Claude Code、Codex、opencode 这类工具）的内部实现机制。每篇笔记讲一个机制，配一份零依赖、单文件、可以直接运行的 Node 程序。
 
-笔记的内容来自我开发桌面 agent [Reina](https://github.com/Reina-Agent/Reina) 的过程：把其中的核心机制抽出来，简化成单文件代码，按由浅入深的顺序整理成文。因此这里的机制不是照 API 文档推想的，而是实际产品中验证过的做法。
+笔记把 Reina 的核心机制抽出来，简化成单文件代码，按由浅入深的顺序整理成文。因此这里的机制不是照 API 文档推想的，而是实际产品中验证过的做法。
 
 ![所有机制最终都建立在同一个循环上](./assets/s12-mechanism-map.svg)
 
